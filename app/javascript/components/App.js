@@ -1,9 +1,59 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+
+function Answer({ question }) {
+  if (question?.answer) {
+    return (
+      <p>
+        <strong>Answer:</strong> {question.answer}
+      </p>
+    );
+  }
+
+  return <p></p>;
+}
 
 function App() {
-  function handleSubmit(e) {
+  const [question, setQuestion] = useState(null);
+  const [inputValue, setInputValue] = useState("");
+
+  useEffect(() => {
+    const appEl = document.querySelector('[data-react-class="App"]');
+    if (appEl?.dataset?.reactProps) {
+      const reactProps = JSON.parse(appEl.dataset.reactProps);
+      if (reactProps.question) {
+        setQuestion(reactProps.question);
+        setInputValue(reactProps.question.question);
+      }
+    }
+  }, []);
+
+  function handleInputChange(e) {
+    setInputValue(e.target.value);
+  }
+
+  async function handleSubmit(e) {
     e.preventDefault();
-    console.log("submitted", e);
+    const question = e.target.question.value?.trim();
+    if (!question) {
+      return;
+    }
+    e.preventDefault();
+    const url = "/api/v1/questions/create";
+    const result = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "X-CSRF-Token": document.querySelector("meta[name='csrf-token']")
+          .content,
+      },
+      body: JSON.stringify({ question }),
+    });
+    if (!result.ok) {
+      console.log("SOmething went wrong");
+      return;
+    }
+    const data = await result.json();
+    window.history.pushState({}, null, `/question/${data.id}`);
   }
 
   return (
@@ -13,8 +63,14 @@ function App() {
       </header>
       <main>
         <form onSubmit={handleSubmit}>
-          <textarea name="question"></textarea>
+          <textarea
+            value={inputValue}
+            onChange={handleInputChange}
+            name="question"
+          ></textarea>
+          <button type="submit">Ask Question</button>
         </form>
+        <Answer question={question} />
       </main>
       <footer>
         Built with{" "}

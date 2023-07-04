@@ -3,6 +3,11 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby "3.0.6"
 
+gem 'dotenv-rails'
+
+# Pdf reader for turning book to embeddings
+gem 'pdf-reader', '~> 2.2', '>= 2.2.1'
+
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
 gem "rails", "~> 7.0.5", ">= 7.0.5.1"
 
@@ -65,3 +70,5 @@ end
 gem "shakapacker", "= 7.0"
 
 gem "react-rails", "~> 2.7"
+
+gem "tiktoken_ruby", "~> 0.0.5"

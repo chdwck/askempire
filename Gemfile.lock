@@ -1,6 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    Ascii85 (1.1.0)
     actioncable (7.0.5.1)
       actionpack (= 7.0.5.1)
       activesupport (= 7.0.5.1)
@@ -68,6 +69,7 @@ GEM
       tzinfo (~> 2.0)
     addressable (2.8.4)
       public_suffix (>= 2.0.2, < 6.0)
+    afm (0.2.2)
     babel-source (5.8.35)
     babel-transpiler (0.7.0)
       babel-source (>= 4.0, < 6)
@@ -92,10 +94,15 @@ GEM
     debug (1.8.0)
       irb (>= 1.5.0)
       reline (>= 0.3.1)
+    dotenv (2.8.1)
+    dotenv-rails (2.8.1)
+      dotenv (= 2.8.1)
+      railties (>= 3.2)
     erubi (1.12.0)
     execjs (2.8.1)
     globalid (1.1.0)
       activesupport (>= 5.0)
+    hashery (2.1.2)
     i18n (1.14.1)
       concurrent-ruby (~> 1.0)
     io-console (0.6.0)
@@ -130,6 +137,12 @@ GEM
     nio4r (2.5.9)
     nokogiri (1.15.2-arm64-darwin)
       racc (~> 1.4)
+    pdf-reader (2.11.0)
+      Ascii85 (~> 1.0)
+      afm (~> 0.2.1)
+      hashery (~> 2.0)
+      ruby-rc4
+      ttfunk
     public_suffix (5.0.1)
     puma (5.6.6)
       nio4r (~> 2.0)
@@ -177,6 +190,7 @@ GEM
     reline (0.3.5)
       io-console (~> 0.5)
     rexml (3.2.5)
+    ruby-rc4 (0.1.5)
     rubyzip (2.3.2)
     selenium-webdriver (4.10.0)
       rexml (~> 3.2, >= 3.2.5)
@@ -197,8 +211,10 @@ GEM
       sprockets (>= 3.0.0)
     sqlite3 (1.6.3-arm64-darwin)
     thor (1.2.2)
+    tiktoken_ruby (0.0.5-arm64-darwin)
     tilt (2.2.0)
     timeout (0.4.0)
+    ttfunk (1.7.0)
     tzinfo (2.0.6)
       concurrent-ruby (~> 1.0)
     web-console (4.2.0)
@@ -225,7 +241,9 @@ DEPENDENCIES
   bootsnap
   capybara
   debug
+  dotenv-rails
   jbuilder
+  pdf-reader (~> 2.2, >= 2.2.1)
   puma (~> 5.0)
   rails (~> 7.0.5, >= 7.0.5.1)
   react-rails (~> 2.7)
@@ -233,6 +251,7 @@ DEPENDENCIES
   shakapacker (= 7.0)
   sprockets-rails
   sqlite3 (~> 1.4)
+  tiktoken_ruby (~> 0.0.5)
   tzinfo-data
   web-console
   webdrivers

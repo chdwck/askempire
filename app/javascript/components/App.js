@@ -53,6 +53,7 @@ function App() {
       return;
     }
     const data = await result.json();
+    setQuestion(data);
     window.history.pushState({}, null, `/question/${data.id}`);
   }
 

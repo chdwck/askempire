@@ -33,8 +33,8 @@ function App() {
 
   async function handleSubmit(e) {
     e.preventDefault();
-    const question = e.target.question.value?.trim();
-    if (!question) {
+    const questionText = e.target.question.value?.trim();
+    if (!questionText) {
       return;
     }
     e.preventDefault();
@@ -46,15 +46,17 @@ function App() {
         "X-CSRF-Token": document.querySelector("meta[name='csrf-token']")
           .content,
       },
-      body: JSON.stringify({ question }),
+      body: JSON.stringify({ question: questionText }),
     });
     if (!result.ok) {
       console.log("SOmething went wrong");
       return;
     }
     const data = await result.json();
+    if (data.id !== question.id) {
+      window.history.pushState({}, null, `/question/${data.id}`);
+    }
     setQuestion(data);
-    window.history.pushState({}, null, `/question/${data.id}`);
   }
 
   return (
